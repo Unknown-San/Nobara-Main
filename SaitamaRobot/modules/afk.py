@@ -1,7 +1,4 @@
-import random
-import html
-from datetime import datetime
-import humanize
+import random, html
 
 from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.disable import (
@@ -41,9 +38,7 @@ def afk(update: Update, context: CallbackContext):
     sql.set_afk(update.effective_user.id, reason)
     fname = update.effective_user.first_name
     try:
-        update.effective_message.reply_text(
-            "{} is now away!{}".format(fname, notice),
-        )
+        update.effective_message.reply_text("{} is now away!{}".format(fname, notice))
     except BadRequest:
         pass
 
@@ -63,22 +58,17 @@ def no_longer_afk(update: Update, context: CallbackContext):
         firstname = update.effective_user.first_name
         try:
             options = [
-                "{} Is wasting his time in the chat!",
-                "The Dead {} Came Back From His Grave!",
-                "We thought we lost you {}",
-                "Welcome Back {} now pay $100 to Get freedom or get banned!",
-                "{} Good job waking up now get ready for your classes!",
-                "Hey {}! Why weren't you online for such a long time?",
-                "{} why did you came back?",
-                "{} Is now back online!",
-                "OwO, Welcome back {}",
-                "Welcome to hell again {}",
-                "Mission failed successfully {}",
+                "{} is here!",
+                "{} is back!",
+                "{} is now in the chat!",
+                "{} is awake!",
+                "{} is back online!",
+                "{} is finally here!",
+                "Welcome back! {}",
+                "Where is {}?\nIn the chat!",
             ]
             chosen_option = random.choice(options)
-            update.effective_message.reply_text(
-                chosen_option.format(firstname),
-            )
+            update.effective_message.reply_text(chosen_option.format(firstname))
         except:
             return
 
@@ -90,10 +80,10 @@ def reply_afk(update: Update, context: CallbackContext):
     userc = update.effective_user
     userc_id = userc.id
     if message.entities and message.parse_entities(
-        [MessageEntity.TEXT_MENTION, MessageEntity.MENTION],
+        [MessageEntity.TEXT_MENTION, MessageEntity.MENTION]
     ):
         entities = message.parse_entities(
-            [MessageEntity.TEXT_MENTION, MessageEntity.MENTION],
+            [MessageEntity.TEXT_MENTION, MessageEntity.MENTION]
         )
 
         chk_users = []
@@ -109,9 +99,7 @@ def reply_afk(update: Update, context: CallbackContext):
             if ent.type != MessageEntity.MENTION:
                 return
 
-            user_id = get_user_id(
-                message.text[ent.offset: ent.offset + ent.length],
-            )
+            user_id = get_user_id(message.text[ent.offset : ent.offset + ent.length])
             if not user_id:
                 # Should never happen, since for a user to become AFK they must have spoken. Maybe changed username?
                 return
@@ -135,35 +123,25 @@ def reply_afk(update: Update, context: CallbackContext):
         check_afk(update, context, user_id, fst_name, userc_id)
 
 
-def check_afk(update: Update, context: CallbackContext, user_id: int, fst_name: str, userc_id: int):
+def check_afk(update, context, user_id, fst_name, userc_id):
     if sql.is_afk(user_id):
         user = sql.check_afk_status(user_id)
-
         if int(userc_id) == int(user_id):
             return
-
-        time = humanize.naturaldelta(datetime.now() - user.time)
-
         if not user.reason:
-            res = "{} Is Dead.\n\nLast Liveliness {} ago.".format(
-                fst_name,
-                time,
-            )
+            res = "{} is afk".format(fst_name)
             update.effective_message.reply_text(res)
         else:
-            res = "{} is afk.\nReason: <code>{}</code>\n\nLast seen {} ago.".format(
-                html.escape(fst_name),
-                html.escape(user.reason),
-                time,
+            res = "{} is afk.\nReason: <code>{}</code>".format(
+                html.escape(fst_name), html.escape(user.reason)
             )
             update.effective_message.reply_text(res, parse_mode="html")
 
 
 
-
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk)
 AFK_REGEX_HANDLER = DisableAbleMessageHandler(
-    Filters.regex(r"^(?i)brb(.*)$"), afk, friendly="afk",
+    Filters.regex(r"^(?i)brb(.*)$"), afk, friendly="afk"
 )
 NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group, no_longer_afk)
 AFK_REPLY_HANDLER = MessageHandler(Filters.all & Filters.group, reply_afk)
@@ -173,6 +151,7 @@ dispatcher.add_handler(AFK_REGEX_HANDLER, AFK_GROUP)
 dispatcher.add_handler(NO_AFK_HANDLER, AFK_GROUP)
 dispatcher.add_handler(AFK_REPLY_HANDLER, AFK_REPLY_GROUP)
 
+__mod_name__ = "AFK"
 __command_list__ = ["afk"]
 __handlers__ = [
     (AFK_HANDLER, AFK_GROUP),
