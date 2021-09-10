@@ -8,7 +8,7 @@ from SaitamaRobot import pbot as Jebot
 from SaitamaRobot.utils.saavnhelp import get_arg
 
 
-@Jebot.on_message(filters.command("saavn"))
+@Jebot.on_message(filters.command("song"))
 async def song(client, message):
     message.chat.id
     message.from_user["id"]
