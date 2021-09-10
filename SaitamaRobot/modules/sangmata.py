@@ -1,7 +1,7 @@
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions, types
 
-from SaitamaRobot.event import register as Nobara
+from SaitamaRobot.events import register as Nobara
 from SaitamaRobot import telethn as tbot
 from SaitamaRobot.utils.telethonub import ubot
 
