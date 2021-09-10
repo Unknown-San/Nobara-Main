@@ -84,7 +84,7 @@ Helpful commands:
 - /help: Sends this message; I'll tell you more about myself!
 - /donate: Gives you info on how to support me and my creator.
 
-Join My Support If You Have Any Queries: @supprt_sora
+Join My Support If You Have Any Queries: @NobaraSupport
 
 All commands can be used with the following: / !
 List of all the Modules:
@@ -93,7 +93,7 @@ List of all the Modules:
     "" if not ALLOW_EXCL else "📝All commands can either be used with / or !.",
 )
 
-EREN_IMG = "https://telegra.ph/file/06355bb1cd9d0c53d1171.jpg"
+EREN_IMG = "https://telegra.ph/file/8ab770904946c033f114e.jpg"
 
 DONATE_STRING = """Durov Is my Cousin By The Way.."""
 
@@ -212,7 +212,7 @@ def start(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                text="➕ Add Nobara to your group!",
+                                text="➕ ᴀᴅᴅ ᴍᴇ! ➕",
                                 url="t.me/{}?startgroup=true".format(
                                     context.bot.username,
                                 ),
@@ -220,27 +220,27 @@ def start(update: Update, context: CallbackContext):
                         ],
                         [
                             InlineKeyboardButton(
-                                text="⛩ Support ⛩",
+                                text="⛩ sᴜᴘᴘᴏʀᴛ ⛩",
                                 url=f"https://t.me/{SUPPORT_CHAT}",
                             ),
                             InlineKeyboardButton(
-                                text="🚦 Updates 🚦",
+                                text="🚦 ᴜᴘᴅᴀᴛᴇs 🚦",
                                 url="https://t.me/nobara_kugisaki_updates/",
                             ),
                         ],
                         [
                             InlineKeyboardButton(
-                                text=" Wizards ",
+                                text=" ᴡɪᴢᴀʀᴅ ",
                                 url="https://t.me/nobara_kugisaki_updates/5",
                             ),
                             InlineKeyboardButton(
-                                text=" Shinobi Network™",
+                                text="ɢʀᴏᴜᴘ",
                                 url="https://t.me/shinobinet/",
                             ),
                         ],
                         [
                             InlineKeyboardButton(
-                                text="⚓️ Help and Commands ⚓️",
+                                text="⚓️ ʜᴇʟᴘ ⚓️",
                                 url="https://t.me/NobarasanRobot?start=help",
                             ),
                         ],
