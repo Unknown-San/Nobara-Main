@@ -287,26 +287,26 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nThe Disaster level of this person is 'Founding Titan'."
+        text += "\n\nThe Disaster level of this person is <b>'GOD'</b>."
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nThis user is member of the 'Ackerman Clan'."
+        text += "\n\nThis user is member of the 'Wizard Dragon'."
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\nThe Disaster level of this person is 'Titan Shifter'."
+        text += "\n\nThe Disaster level of this person is 'Wizard Demons'."
         disaster_level_present = True
     elif user.id in DEMONS:
-        text += "\n\nThe Disaster level of this person is 'Royal Blood'."
+        text += "\n\nThe Disaster level of this person is 'Wizard Tiger'."
         disaster_level_present = True 
     elif user.id in TIGERS:
-        text += "\n\nThe Disaster level of this person is 'Scout'."
+        text += "\n\nThe Disaster level of this person is 'Wizard Wolves'."
         disaster_level_present = True
     elif user.id in WOLVES:
-        text += "\n\nThe Disaster level of this person is 'Garrison'."
+        text += "\n\nThe Disaster level of this person is 'Retard'."
         disaster_level_present = True
 
     if disaster_level_present:
-        text += ' [<a href="https://t.me/foundingtitanupdates/12">?</a>]'.format(
+        text += ' [<a href="https://t.me/NobaraBotUpdates/5">?</a>]'.format(
             bot.username,
         )
 
