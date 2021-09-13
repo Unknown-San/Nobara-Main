@@ -65,7 +65,7 @@ if ENV:
     api_hash=API_HASH,
     bot_token=TOKEN,
 )
-    async def get_entity(client, entity):
+async def get_entity(client, entity):
     entity_client = client
     if not isinstance(entity, Chat):
         try:
@@ -93,7 +93,6 @@ if ENV:
 
 apps = []  
 apps.append(pgram)
-
     
     
     
