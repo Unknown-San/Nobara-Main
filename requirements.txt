@@ -56,3 +56,4 @@ aiohttp[speedups]
 cryptg
 cryptography
 Python_ARQ
+gpytranslate
