@@ -15,7 +15,7 @@ from telegram.utils.helpers import mention_html
 
 from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
-from SaitamaRobot.event import register as Nobara
+from SaitamaRobot.events import register as Nobara
 from SaitamaRobot import telethn as bot
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
