@@ -3,22 +3,25 @@ import math
 import requests
 import cloudscraper
 import urllib.request as urllib
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
+import textwrap
 from html import escape
 from bs4 import BeautifulSoup as bs
 
+from telegram.ext import CallbackContext
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import TelegramError, Update
-from telegram.ext import run_async, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
+from SaitamaRobot.event import register as Nobara
+from SaitamaRobot import telethn as bot
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
 
 
-@run_async
+
 def stickerid(update: Update, context: CallbackContext):
     msg = update.effective_message
     if msg.reply_to_message and msg.reply_to_message.sticker:
@@ -39,16 +42,14 @@ def stickerid(update: Update, context: CallbackContext):
         )
 
 
-@run_async
+
 def cb_sticker(update: Update, context: CallbackContext):
     msg = update.effective_message
     split = msg.text.split(" ", 1)
     if len(split) == 1:
         msg.reply_text("Provide some name to search for pack.")
         return
-
-    scraper = cloudscraper.create_scraper()
-    text = scraper.get(combot_stickers_url + split[1]).text
+    text = requests.get(combot_stickers_url + split[1]).text
     soup = bs(text, "lxml")
     results = soup.find_all("a", {"class": "sticker-pack__btn"})
     titles = soup.find_all("div", "sticker-pack__title")
@@ -60,6 +61,8 @@ def cb_sticker(update: Update, context: CallbackContext):
         link = result["href"]
         reply += f"\n• [{title.get_text()}]({link})"
     msg.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
+
+
 
 def getsticker(update: Update, context: CallbackContext):
     bot = context.bot
@@ -77,13 +80,13 @@ def getsticker(update: Update, context: CallbackContext):
         )
 
 
-@run_async
+
 def kang(update: Update, context: CallbackContext):
     msg = update.effective_message
     user = update.effective_user
     args = context.args
     packnum = 0
-    packname = "a" + str(user.id) + "_by_" + context.bot.username
+    packname = "f" + str(user.id) + "_by_" + context.bot.username
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -92,7 +95,7 @@ def kang(update: Update, context: CallbackContext):
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = (
-                    "a"
+                    "f"
                     + str(packnum)
                     + "_"
                     + str(user.id)
@@ -132,7 +135,7 @@ def kang(update: Update, context: CallbackContext):
         elif msg.reply_to_message.sticker and msg.reply_to_message.sticker.emoji:
             sticker_emoji = msg.reply_to_message.sticker.emoji
         else:
-            sticker_emoji = "🤔"
+            sticker_emoji = "👀"
 
         if not is_animated:
             try:
@@ -214,7 +217,7 @@ def kang(update: Update, context: CallbackContext):
                 print(e)
 
         else:
-            packname = "animated" + str(user.id) + "_by_" + context.bot.username
+            packname = "animation" + str(user.id) + "_by_" + context.bot.username
             packname_found = 0
             max_stickers = 50
             while packname_found == 0:
@@ -223,7 +226,7 @@ def kang(update: Update, context: CallbackContext):
                     if len(stickerset.stickers) >= max_stickers:
                         packnum += 1
                         packname = (
-                            "animated"
+                            "animation"
                             + str(packnum)
                             + "_"
                             + str(user.id)
@@ -361,7 +364,7 @@ def kang(update: Update, context: CallbackContext):
     else:
         packs = "Please reply to a sticker, or image to kang it!\nOh, by the way. here are your packs:\n"
         if packnum > 0:
-            firstpackname = "a" + str(user.id) + "_by_" + context.bot.username
+            firstpackname = "f" + str(user.id) + "_by_" + context.bot.username
             for i in range(0, packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"
@@ -450,12 +453,160 @@ def makepack_internal(
     else:
         msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
 
+# if your are reading this, it took me 2 hours to make delsticker 
+def delsticker(update, context):
+    msg = update.effective_message
+    if msg.reply_to_message and msg.reply_to_message.sticker:
+        file_id = msg.reply_to_message.sticker.file_id
+    else:
+        update.effective_message.reply_text(
+            "Please reply to the sticker which you want to delete from your pack")
+    try:
+        context.bot.delete_sticker_from_set(file_id)
+        msg.reply_text(
+            "Deleted That Sticker from your Pack!\nRemove and Re-Add the Pack to see the changes."
+        )
+   
+    except TelegramError as e:
+        print(e)
+        if e.message == "Stickerset_invalid":
+            msg.reply_text(
+                "Maybe the sticker pack is not yours or the pack was not made by me!",
+                parse_mode=ParseMode.MARKDOWN,
+            )
+    
+
+Credit = "This Plugin Made by Kittu (@A_viyu), if you're using this code in your bot. there is no issue but don't remove this line" 
+
+
+@Nobara(pattern="^/mmf ?(.*)")
+async def handler(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.reply("Reply to an image or a sticker to memeify it Nigga!!")
+        return
+    reply_message = await event.get_reply_message()
+    if not reply_message.media:
+        await event.reply("Provide some Text please")
+        return
+    file = await bot.download_media(reply_message)
+    msg = await event.reply("Memifying this image! Please wait")
+
+    if "Kittu" in Credit:
+       pass
+
+    else: 
+       await event.reply("this nigga removed credit line from code")
+    text = str(event.pattern_match.group(1)).strip()
+
+    if len(text) < 1:
+        return await msg.reply("You might want to try `/mmf text`")
+    meme = await drawText(file, text)
+    await bot.send_file(event.chat_id, file=meme, force_document=False)   
+    await msg.delete()    
+    os.remove(meme)
+
+
+
+# Taken from https://github.com/UsergeTeam/Userge-Plugins/blob/master/plugins/memify.py#L64
+# Maybe replyed to suit the needs of this module
+
+async def drawText(image_path, text):
+    img = Image.open(image_path)
+    os.remove(image_path)
+    shadowcolor = "black"
+    i_width, i_height = img.size
+    if os.name == "nt":
+        fnt = "ariel.ttf"
+    else:
+        fnt = "./SaitamaRobot/resources/ArmWrestler.ttf"
+    m_font = ImageFont.truetype(fnt, int((70 / 640) * i_width))
+    if ";" in text:
+        upper_text, lower_text = text.split(";")
+    else:
+        upper_text = text
+        lower_text = ''
+    draw = ImageDraw.Draw(img)
+    current_h, pad = 10, 5
+    if upper_text:
+        for u_text in textwrap.wrap(upper_text, width=15):
+            u_width, u_height = draw.textsize(u_text, font=m_font)
+            draw.text(xy=(((i_width - u_width) / 2) - 2, int((current_h / 640)
+
+                                                             * i_width)), text=u_text, font=m_font, fill=(0, 0, 0))
+
+            draw.text(xy=(((i_width - u_width) / 2) + 2, int((current_h / 640)
+
+                                                             * i_width)), text=u_text, font=m_font, fill=(0, 0, 0))
+            draw.text(xy=((i_width - u_width) / 2,
+                          int(((current_h / 640) * i_width)) - 2),
+
+                      text=u_text,
+                      font=m_font,
+                      fill=(0,
+                            0,
+                            0))
+
+            draw.text(xy=(((i_width - u_width) / 2),
+                          int(((current_h / 640) * i_width)) + 2),
+
+                      text=u_text,
+                      font=m_font,
+                      fill=(0,
+                            0,
+                            0))
+
+
+
+            draw.text(xy=((i_width - u_width) / 2, int((current_h / 640)
+
+                                                       * i_width)), text=u_text, font=m_font, fill=(255, 255, 255))
+
+            current_h += u_height + pad
+
+    if lower_text:
+        for l_text in textwrap.wrap(lower_text, width=15):
+            u_width, u_height = draw.textsize(l_text, font=m_font)
+            draw.text(
+                xy=(((i_width - u_width) / 2) - 2, i_height -
+                    u_height - int((20 / 640) * i_width)),
+                text=l_text, font=m_font, fill=(0, 0, 0))
+            draw.text(
+                xy=(((i_width - u_width) / 2) + 2, i_height -
+                    u_height - int((20 / 640) * i_width)),
+                text=l_text, font=m_font, fill=(0, 0, 0))
+            draw.text(
+                xy=((i_width - u_width) / 2, (i_height -
+                                              u_height - int((20 / 640) * i_width)) - 2),
+                text=l_text, font=m_font, fill=(0, 0, 0))
+
+            draw.text(
+                xy=((i_width - u_width) / 2, (i_height -
+
+                                              u_height - int((20 / 640) * i_width)) + 2),
+                text=l_text, font=m_font, fill=(0, 0, 0))
+
+
+            draw.text(
+                xy=((i_width - u_width) / 2, i_height -
+                    u_height - int((20 / 640) * i_width)),
+                text=l_text, font=m_font, fill=(255, 255, 255))
+            current_h += u_height + pad          
+    image_name = "memify.webp"
+    webp_file = os.path.join(image_name)
+    img.save(webp_file, "webp")
+    return webp_file
+
+
 
 __help__ = """
- • `/stickerid` : reply to a sticker to me to tell you its file ID.
- • `/getsticker` : reply to a sticker to me to upload its raw PNG file.
- • `/kang` : reply to a sticker to add it to your pack.
- • `/stickers` : Find stickers for given term on combot sticker catalogue
+  ➢ `/stickerid` : reply to a sticker to me to tell you its file ID.
+  ➢ `/getsticker` : reply to a sticker to me to upload its raw PNG file.
+  ➢ `/kang` : reply to a sticker to add it to your pack.
+  ➢ `/delkang` : reply to a Sticker to remove it from your pack
+  ➢ `/mmf` : memefiy any sticker and image.
+  ➢ `/stickers` : Find stickers for given term on combot sticker catalogue
 """
 
 __mod_name__ = "Stickers"
@@ -463,8 +614,11 @@ STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
 GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
 KANG_HANDLER = DisableAbleCommandHandler(["kang", "steal"], kang, admin_ok=True)
 STICKERS_HANDLER = DisableAbleCommandHandler("stickers", cb_sticker)
+DELKANG_HANDLER = DisableAbleCommandHandler(["delsticker", "delkang"], delsticker, admin_ok=True)
 
 dispatcher.add_handler(STICKERS_HANDLER)
 dispatcher.add_handler(STICKERID_HANDLER)
 dispatcher.add_handler(GETSTICKER_HANDLER)
 dispatcher.add_handler(KANG_HANDLER)
+dispatcher.add_handler(DELKANG_HANDLER)
+
