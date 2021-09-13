@@ -55,3 +55,4 @@ envparse
 aiohttp[speedups]
 cryptg
 cryptography
+Python_ARQ
