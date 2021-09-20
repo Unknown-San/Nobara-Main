@@ -13,7 +13,7 @@ from SaitamaRobot.modules.helper_funcs.chat_status import is_user_ban_protected,
 import random
 import telegram
 import SaitamaRobot.modules.sql.users_sql as sql
-from SaitamaRobot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, LOGGER
+from SaitamaRobot import dispatcher, OWNER_ID, DRAGONS, DEMONS, LOGGER
 from SaitamaRobot.modules.helper_funcs.filters import CustomFilters
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 USERS_GROUP = 4
