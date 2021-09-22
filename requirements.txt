@@ -59,4 +59,4 @@ cryptography
 Python_ARQ
 gpytranslate
 html2text
-
+bing_image_downloader
