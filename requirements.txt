@@ -33,6 +33,7 @@ telethon==1.16.4
 ujson
 wikipedia
 zalgo-text
+search_engine_parser
 fontTools
 pyrogram
 nekos.py
