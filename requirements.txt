@@ -58,3 +58,5 @@ cryptg
 cryptography
 Python_ARQ
 gpytranslate
+html2text
+
