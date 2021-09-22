@@ -91,28 +91,28 @@ def gban(update: Update, context: CallbackContext):
 
     if int(user_id) in DEV_USERS:
         message.reply_text(
-            "That user is member of the Ackerman Clan I can't act against our own.",
+            "That user is member of the WIZARD I can't act against our own.",
         )
         return
 
     if int(user_id) in DRAGONS:
         message.reply_text(
-            "I spy, with my little eye... a Titan Shifter! Why are you guys turning on each other?",
+            "! Why are you guys turning on each other?",
         )
         return
 
     if int(user_id) in DEMONS:
         message.reply_text(
-            "OOOH someone's trying to gban a Royal Blood! *grabs popcorn*",
+            "OOOH someone's trying to gban a Demon! *grabs popcorn*",
         )
         return
 
     if int(user_id) in TIGERS:
-        message.reply_text("That's a Scout! They cannot be banned!")
+        message.reply_text("That's a Tiger Wizard! They cannot be banned!")
         return
 
     if int(user_id) in WOLVES:
-        message.reply_text("That's a Garrison! They cannot be banned!")
+        message.reply_text("That's a Wolfy! They cannot be banned!")
         return
 
     if user_id == bot.id:
