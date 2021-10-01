@@ -198,7 +198,7 @@ async def _(client, message):
         await lel.edit(reply)  # edit or reply
 
 
-@pbot.on_message(filters.command(["glyric", "glyrics"]))
+@pbot.on_message(filters.command(["lyrics", "lyric"]))
 async def lyrics(client, message):
 
     if r"-" in message.text:
