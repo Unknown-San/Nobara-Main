@@ -1,6 +1,8 @@
 # Copyright (C) 2021 MoeZilla
 
-# This file is part of Cutiepii (Telegram Bot)
+# This file is part of Kuki (Telegram Bot)
+
+# Follow My Github Id https://github.com/MoeZilla/
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -15,68 +17,108 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+
+
 import json
+import re
 import os
 import html
 import requests
-import SaitamaRobot.modules.sql.chatbot_sql as sql
+import MoeZillaBot.modules.sql.chatbot_sql as sql
 
 from time import sleep
 from telegram import ParseMode
-from SaitamaRobot import dispatcher, updater, SUPPORT_CHAT
-from SaitamaRobot.modules.log_channel import gloggable
-from telegram import Message, Chat, Update, Bot, MessageEntity
+from MoeZillaBot import dispatcher, updater, SUPPORT_CHAT
+from MoeZillaBot.modules.log_channel import gloggable
+from telegram import (CallbackQuery, Chat, MessageEntity, InlineKeyboardButton,
+                      InlineKeyboardMarkup, Message, ParseMode, Update, Bot, User)
+
+from telegram.ext import (CallbackContext, CallbackQueryHandler, CommandHandler,
+                          DispatcherHandlerStop, Filters, MessageHandler,
+                          run_async)
+
 from telegram.error import BadRequest, RetryAfter, Unauthorized
-from telegram.ext import CommandHandler, run_async, CallbackContext, MessageHandler, Filters
-from SaitamaRobot.modules.helper_funcs.filters import CustomFilters
-from SaitamaRobot.modules.helper_funcs.chat_status import user_admin
+
+from MoeZillaBot.modules.helper_funcs.filters import CustomFilters
+from MoeZillaBot.modules.helper_funcs.chat_status import user_admin, user_admin_no_reply
+
 from telegram.utils.helpers import mention_html, mention_markdown, escape_markdown
 
-@user_admin
+ 
+@user_admin_no_reply
 @gloggable
-def add_chat(update: Update, context: CallbackContext):
-    chat = update.effective_chat
-    msg = update.effective_message
-    user = update.effective_user
-    is_kuki = sql.is_kuki(chat.id)
-    if not is_kuki:
-        sql.set_kuki(chat.id)
-        msg.reply_text("Nobara AI successfully enabled for this chat!")
-        message = (
-            f"<b>{html.escape(chat.title)}:</b>\n"
-            f"AI_ENABLED\n"
-            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-        )
-        return message
-    msg.reply_text("Nobara AI is already enabled for this chat!")
+def kukirm(update: Update, context: CallbackContext) -> str:
+    query: Optional[CallbackQuery] = update.callback_query
+    user: Optional[User] = update.effective_user
+    match = re.match(r"rm_chat\((.+?)\)", query.data)
+    if match:
+        user_id = match.group(1)
+        chat: Optional[Chat] = update.effective_chat
+        is_kuki = sql.rem_kuki(chat.id)
+        if is_kuki:
+            is_kuki = sql.rem_kuki(user_id)
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"AI_DISABLED\n"
+                f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            )
+        else:
+            update.effective_message.edit_text(
+                "Chatbot disable by {}.".format(mention_html(user.id, user.first_name)),
+                parse_mode=ParseMode.HTML,
+            )
+
     return ""
 
+@user_admin_no_reply
+@gloggable
+def kukiadd(update: Update, context: CallbackContext) -> str:
+    query: Optional[CallbackQuery] = update.callback_query
+    user: Optional[User] = update.effective_user
+    match = re.match(r"add_chat\((.+?)\)", query.data)
+    if match:
+        user_id = match.group(1)
+        chat: Optional[Chat] = update.effective_chat
+        is_kuki = sql.set_kuki(chat.id)
+        if is_kuki:
+            is_kuki = sql.set_kuki(user_id)
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"AI_ENABLE\n"
+                f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            )
+        else:
+            update.effective_message.edit_text(
+                "Chatbot enable by {}.".format(mention_html(user.id, user.first_name)),
+                parse_mode=ParseMode.HTML,
+            )
+
+    return ""
 
 @user_admin
 @gloggable
-def rem_chat(update: Update, context: CallbackContext):
-    msg = update.effective_message
-    chat = update.effective_chat
+def kuki(update: Update, context: CallbackContext):
     user = update.effective_user
-    is_kuki = sql.is_kuki(chat.id)
-    if not is_kuki:
-        msg.reply_text("Nobara AI isn't enabled here in the first place!")
-        return ""
-    sql.rem_kuki(chat.id)
-    msg.reply_text("Nobara AI disabled successfully!")
-    message = (
-        f"<b>{html.escape(chat.title)}:</b>\n"
-        f"AI_DISABLED\n"
-        f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+    message = update.effective_message
+    msg = f"Choose an option"
+    keyboard = InlineKeyboardMarkup([[
+        InlineKeyboardButton(
+            text="Enable",
+            callback_data="add_chat({})")],
+       [
+        InlineKeyboardButton(
+            text="Disable",
+            callback_data="rm_chat({})")]])
+    message.reply_text(
+        msg,
+        reply_markup=keyboard,
+        parse_mode=ParseMode.HTML,
     )
-    return message
- 
-
-
 
 def kuki_message(context: CallbackContext, message):
     reply_message = message.reply_to_message
-    if message.text.lower() == "Nobara":
+    if message.text.lower() == "nobara":
         return True
     if reply_message:
         if reply_message.from_user.id == context.bot.get_me().id:
@@ -98,7 +140,7 @@ def chatbot(update: Update, context: CallbackContext):
             return
         Message = message.text
         bot.send_chat_action(chat_id, action="typing")
-        kukiurl = requests.get('https://kuki-api.tk/api/Raiden/moezilla/message='+Message)
+        kukiurl = requests.get('https://www.kuki-api.tk/api/Kuki/MoeZilla/message='+Message)
         Kuki = json.loads(kukiurl.text)
         kuki = Kuki['reply']
         sleep(0.3)
@@ -110,40 +152,29 @@ def list_all_chats(update: Update, context: CallbackContext):
     for chat in chats:
         try:
             x = context.bot.get_chat(int(*chat))
-            name = x.title if x.title else x.first_name
+            name = x.title or x.first_name
             text += f"• <code>{name}</code>\n"
-        except BadRequest:
-            sql.rem_kuki(*chat)
-        except Unauthorized:
+        except (BadRequest, Unauthorized):
             sql.rem_kuki(*chat)
         except RetryAfter as e:
             sleep(e.retry_after)
     update.effective_message.reply_text(text, parse_mode="HTML")
-   
 
 __help__ = """
-
-"""
-
-__mod_name__ = "ChatBot"
-
-
-__help__ = """
-Chatbot utilizes the Kuki and allows Nobara to talk and provides a more interactive group chat experience.
-
-*Commands:* 
-*Admins only:*
-   ➢ `addchat`*:* Enables Chatbot mode in the chat.
-   ➢ `rmchat`*:* Disables Chatbot mode in the chat.
-   
-Reports bugs at Kuki-api.tk
+Chatbot utilizes the Kuki's api which allows Nobara to talk and provide a more interactive group chat experience.
+*Admins only Commands*:
+  ➢ `/Chatbot`*:* Shows chatbot control panel
+  
+ Reports bugs at Kuki-api.tk
 *Powered by ItelAi* (https://github/itelai) from @KukiUpdates
 """
 
 __mod_name__ = "ChatBot"
 
-ADD_CHAT_HANDLER = CommandHandler("addchat", add_chat)
-REMOVE_CHAT_HANDLER = CommandHandler("rmchat", rem_chat)
+
+CHATBOTK_HANDLER = CommandHandler("chatbot", kuki)
+ADD_CHAT_HANDLER = CallbackQueryHandler(kukiadd, pattern=r"add_chat")
+RM_CHAT_HANDLER = CallbackQueryHandler(kukirm, pattern=r"rm_chat")
 CHATBOT_HANDLER = MessageHandler(
     Filters.text & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!")
                     & ~Filters.regex(r"^\/")), chatbot)
@@ -151,13 +182,15 @@ LIST_ALL_CHATS_HANDLER = CommandHandler(
     "allchats", list_all_chats, filters=CustomFilters.dev_filter)
 
 dispatcher.add_handler(ADD_CHAT_HANDLER)
-dispatcher.add_handler(REMOVE_CHAT_HANDLER)
+dispatcher.add_handler(CHATBOTK_HANDLER)
+dispatcher.add_handler(RM_CHAT_HANDLER)
 dispatcher.add_handler(LIST_ALL_CHATS_HANDLER)
 dispatcher.add_handler(CHATBOT_HANDLER)
 
 __handlers__ = [
     ADD_CHAT_HANDLER,
-    REMOVE_CHAT_HANDLER,
+    CHATBOTK_HANDLER,
+    RM_CHAT_HANDLER,
     LIST_ALL_CHATS_HANDLER,
     CHATBOT_HANDLER,
 ]
