@@ -5,7 +5,7 @@ from pyrogram import filters
 from googletrans import Translator as google_translator
 
 from SaitamaRobot import BOT_ID
-from SaitamaRobot.helper_extra.aichat import add_chat, get_session, remove_chat
+from SaitamaRobot.helper_funcs.aichat import add_chat, get_session, remove_chat
 from SaitamaRobot.utils.pluginshelper import admins_only, edit_or_reply
 from SaitamaRobot import pbot as nobara
 
