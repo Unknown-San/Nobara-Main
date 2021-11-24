@@ -72,22 +72,27 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
- Yahho Watashi Nobara Desu, I am Groups Management Bot !! I can Help You Manage Your Group for you!!, send /help for command list...[.](https://telegra.ph/file/1f054a1f6e857f6c4428d.jpg)
+❂ ɪ ᴀᴍ ɴᴏʙᴀʀᴀ ᴀ ᴊᴜᴊᴜᴛꜱᴜ ᴡɪᴢᴀʀᴅ ꜱᴏʀᴄᴇʀᴇʀ ❂
+--------------------------------------
+𝘼 𝙛𝙡𝙚𝙭𝙞𝙗𝙡𝙚 𝙖𝙣𝙙 𝙈𝙪𝙡𝙩𝙞 𝙁𝙚𝙖𝙩𝙪𝙧𝙚𝙙 𝙂𝙧𝙤𝙪𝙥 𝙈𝙖𝙣𝙖𝙜𝙚𝙢𝙚𝙣𝙩 𝘽𝙤𝙩
+--------------------------------------
+ᴄʟɪᴄᴋ ᴏɴ /HELP ᴛᴏ ᴋɴᴏᴡ ᴍʏ ꜱᴋɪʟʟꜱ...
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ @AogiriNetwork[.](https://telegra.ph/file/1f054a1f6e857f6c4428d.jpg)
 """
 
 HELP_STRINGS = """
-Hey there, I'm Nobara Kugisaki!
-To make me functional, make sure that i have enough rights in your group.
+ʜᴇʏ ᴛʜᴇʀᴇ, ɪ'ᴍ ɴᴏʙᴀʀᴀ ᴋᴜɢɪꜱᴀᴋɪ!
+ᴛᴏ ᴍᴀᴋᴇ ᴍᴇ ꜰᴜɴᴄᴛɪᴏɴᴀʟ, ᴍᴀᴋᴇ ꜱᴜʀᴇ ᴛʜᴀᴛ ɪ ʜᴀᴠᴇ ᴇɴᴏᴜɢʜ ʀɪɢʜᴛꜱ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ.
 
-Helpful commands:
-- /start: Starts me! You've probably already used this.
-- /help: Sends this message; I'll tell you more about myself!
-- /donate: Gives you info on how to support me and my creator.
+ʜᴇʟᴘꜰᴜʟ ᴄᴏᴍᴍᴀɴᴅꜱ:
+- /ꜱᴛᴀʀᴛ: ꜱᴛᴀʀᴛꜱ ᴍᴇ! ʏᴏᴜ'ᴠᴇ ᴘʀᴏʙᴀʙʟʏ ᴀʟʀᴇᴀᴅʏ ᴜꜱᴇᴅ ᴛʜɪꜱ.
+- /ʜᴇʟᴘ: ꜱᴇɴᴅꜱ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ; ɪ'ʟʟ ᴛᴇʟʟ ʏᴏᴜ ᴍᴏʀᴇ ᴀʙᴏᴜᴛ ᴍʏꜱᴇʟꜰ!
+- /ᴅᴏɴᴀᴛᴇ: ɢɪᴠᴇꜱ ʏᴏᴜ ɪɴꜰᴏ ᴏɴ ʜᴏᴡ ᴛᴏ ꜱᴜᴘᴘᴏʀᴛ ᴍᴇ ᴀɴᴅ ᴍʏ ᴄʀᴇᴀᴛᴏʀ.
 
-Join My Support If You Have Any Queries: @NobaraSupport
+ᴊᴏɪɴ ᴍʏ ꜱᴜᴘᴘᴏʀᴛ ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀɴʏ Qᴜᴇʀɪᴇꜱ: @ɴᴏʙᴀʀᴀꜱᴜᴘᴘᴏʀᴛ
 
-All commands can be used with the following: / !
-List of all the Modules:
+ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅꜱ ᴄᴀɴ ʙᴇ ᴜꜱᴇᴅ ᴡɪᴛʜ ᴛʜᴇ ꜰᴏʟʟᴏᴡɪɴɢ: / !
+ʟɪꜱᴛ ᴏꜰ ᴀʟʟ ᴛʜᴇ ᴍᴏᴅᴜʟᴇꜱ:
 """.format(
     dispatcher.bot.first_name,
     "" if not ALLOW_EXCL else "📝All commands can either be used with / or !.",
