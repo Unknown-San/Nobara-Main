@@ -12,7 +12,7 @@ from googletrans import Translator as google_translator
 from pyrogram import filters
 
 from SaitamaRobot import BOT_ID, pbot as Arise
-from SaitamaRobot.helper_extra.aichat import add_chat, get_session, remove_chat
+from SaitamaRobot.aichat import add_chat, get_session, remove_chat
 from SaitamaRobot.pyrogramee.pluginshelper import admins_only, edit_or_reply
 
 translator = google_translator()
