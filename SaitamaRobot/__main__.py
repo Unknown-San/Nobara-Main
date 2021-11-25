@@ -147,6 +147,7 @@ for module_name in ALL_MODULES:
     if hasattr(imported_module, "__user_settings__"):
         USER_SETTINGS[imported_module.__mod_name__.lower()] = imported_module
 
+CHA_VID = "https://telegra.ph/file/3d0fcf49b413aa039ade3.mp4"
 
 # do not async
 def send_help(chat_id, text, keyboard=None):
@@ -253,11 +254,27 @@ def start(update: Update, context: CallbackContext):
                 ),
             )
     else:
-        update.effective_message.reply_text(
-            "A jujutsu Sorcerer Never Sleeps!\n<b>Haven't slept since:</b> <code>{}</code>".format(
-                uptime,
+        first_name = update.effective_user.first_name
+        update.effective_message.reply_video(
+            CHA_VID, caption="I am Here For Protecting You from Curses {}".format(
+                escape_markdown(first_name), escape_markdown(uptime)
             ),
-            parse_mode=ParseMode.HTML,
+            parse_mode=ParseMode.MARKDOWN,
+            # parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="ᴊᴜᴊᴜᴛꜱᴜ ʙᴀꜱᴇ", url="https://t.me/Nobarasupport")
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Aɴɪᴍᴇ Cʜᴀᴛ", url="t.me/animchataura"),
+                        InlineKeyboardButton(
+                            text="ᴀᴏɢɪʀɪ ᴜɴɪᴏɴ", url="t.me/aogirinetwork")
+                    ]
+                ]
+            ),
         )
 
 
