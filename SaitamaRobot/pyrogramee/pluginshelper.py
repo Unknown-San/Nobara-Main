@@ -12,7 +12,7 @@ from pyrogram import Client
 from pyrogram.errors import FloodWait, MessageNotModified
 from pyrogram.types import Chat, Message, User
 
-from SaitamaRobot  import OWNER_ID, SUPPORT_CHAT, UNKNOWNS_ID
+from SaitamaRobot  import OWNER_ID, SUPPORT_CHAT
 from SaitamaRobot import pbot
 OWNER = [OWNER_ID]
 
