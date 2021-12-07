@@ -70,7 +70,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
-Help_img = "https://telegra.ph/file/66ec8254b0e2569c5ef47.jpg"
+Help_img = "https://telegra.ph/file/6c4100b2af9aca5c579fc.jpg"
 Caption = "Contact me in PM to get the list of possible commands."
 PM_START_TEXT = """
 ❂ ɪ ᴀᴍ ɴᴏʙᴀʀᴀ ᴀ ᴊᴜᴊᴜᴛꜱᴜ ᴡɪᴢᴀʀᴅ ꜱᴏʀᴄᴇʀᴇʀ ❂
@@ -158,7 +158,7 @@ def send_help(chat_id, text, keyboard=None):
         chat_id=chat_id,
         text=text,
         parse_mode=ParseMode.MARKDOWN,
-        disable_web_page_preview=True,
+        disable_web_page_preview=False,
         reply_markup=keyboard,
     )
 
