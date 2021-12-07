@@ -70,7 +70,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
-Help_img = "https://telegra.ph/file/cfa820d245a3c48f7e4e2.jpg"
+Help_img = "https://telegra.ph/file/66ec8254b0e2569c5ef47.jpg"
 Caption = "Contact me in PM to get the list of possible commands."
 PM_START_TEXT = """
 ❂ ɪ ᴀᴍ ɴᴏʙᴀʀᴀ ᴀ ᴊᴜᴊᴜᴛꜱᴜ ᴡɪᴢᴀʀᴅ ꜱᴏʀᴄᴇʀᴇʀ ❂
