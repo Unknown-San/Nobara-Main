@@ -89,7 +89,7 @@ HELP_STRINGS = """
 - /ʜᴇʟᴘ: ꜱᴇɴᴅꜱ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ; ɪ'ʟʟ ᴛᴇʟʟ ʏᴏᴜ ᴍᴏʀᴇ ᴀʙᴏᴜᴛ ᴍʏꜱᴇʟꜰ!
 - /ᴅᴏɴᴀᴛᴇ: ɢɪᴠᴇꜱ ʏᴏᴜ ɪɴꜰᴏ ᴏɴ ʜᴏᴡ ᴛᴏ ꜱᴜᴘᴘᴏʀᴛ ᴍᴇ ᴀɴᴅ ᴍʏ ᴄʀᴇᴀᴛᴏʀ.
 
-ᴊᴏɪɴ ᴍʏ ꜱᴜᴘᴘᴏʀᴛ ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀɴʏ Qᴜᴇʀɪᴇꜱ: @ɴᴏʙᴀʀᴀꜱᴜᴘᴘᴏʀᴛ
+ᴊᴏɪɴ ᴍʏ ꜱᴜᴘᴘᴏʀᴛ ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀɴʏ Qᴜᴇʀɪᴇꜱ: @NobaraSupport
 
 ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅꜱ ᴄᴀɴ ʙᴇ ᴜꜱᴇᴅ ᴡɪᴛʜ ᴛʜᴇ ꜰᴏʟʟᴏᴡɪɴɢ: / !
 ʟɪꜱᴛ ᴏꜰ ᴀʟʟ ᴛʜᴇ ᴍᴏᴅᴜʟᴇꜱ:
@@ -241,7 +241,7 @@ def start(update: Update, context: CallbackContext):
                             ),
                             InlineKeyboardButton(
                                 text="ɢʀᴏᴜᴘ",
-                                url="https://t.me/The_Phantom_Troupe/",
+                                url="https://t.me/AnimeChatAura/",
                             ),
                         ],
                         [
@@ -269,7 +269,7 @@ def start(update: Update, context: CallbackContext):
                     ],
                     [
                         InlineKeyboardButton(
-                            text="Aɴɪᴍᴇ Cʜᴀᴛ", url="t.me/animchataura"),
+                            text="Aɴɪᴍᴇ Cʜᴀᴛ", url="t.me/animechataura"),
                         InlineKeyboardButton(
                             text="ᴀᴏɢɪʀɪ ᴜɴɪᴏɴ", url="t.me/aogirinetwork")
                     ]
