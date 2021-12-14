@@ -72,12 +72,12 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-❂ ɪ ᴀᴍ ɴᴏʙᴀʀᴀ ᴀ ᴊᴜᴊᴜᴛꜱᴜ ᴡɪᴢᴀʀᴅ ꜱᴏʀᴄᴇʀᴇʀ ❂
---------------------------------------
-𝘼 𝙛𝙡𝙚𝙭𝙞𝙗𝙡𝙚 𝙖𝙣𝙙 𝙈𝙪𝙡𝙩𝙞 𝙁𝙚𝙖𝙩𝙪𝙧𝙚𝙙 𝙂𝙧𝙤𝙪𝙥 𝙈𝙖𝙣𝙖𝙜𝙚𝙢𝙚𝙣𝙩 𝘽𝙤𝙩
---------------------------------------
-ᴄʟɪᴄᴋ ᴏɴ /HELP ᴛᴏ ᴋɴᴏᴡ ᴍʏ ꜱᴋɪʟʟꜱ...
-ᴘᴏᴡᴇʀᴇᴅ ʙʏ @AogiriNetwork[.](https://telegra.ph/file/1f054a1f6e857f6c4428d.jpg)
+ᴡᴀsᴛᴀsʜɪᴡᴀ ɴᴏʙᴀʀᴀ ᴅᴇs ғʀᴏᴍ ᴊᴜᴊᴜᴛsᴜ ᴋᴀɪsᴇɴ. ɪ ᴀᴍ ᴀᴛ ᴜʀ sᴇʀᴠɪᴄᴇ
+━━━━━━━━━━━━━━━━━━━━━━
+ᴀ ᴍᴜʟᴛɪ ғᴇᴀᴛᴜʀᴇ ʙᴏᴛ ᴛᴏ ᴍᴀɴᴀɢᴇ ᴜʀ ɢʀᴏᴜᴘs
+━━━━━━━━━━━━━━━━━━━━━━
+ᴘʀᴇss /help ᴛᴏ sᴇᴇ ᴀʟʟ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅs 
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ @AogiriNetwork[.](https://telegra.ph/file/06f5c43f874d52abf849b.jpg)
 """
 
 HELP_STRINGS = """
@@ -207,8 +207,7 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(
-                EREN_IMG,
+            update.effective_message.reply_text(
                 PM_START_TEXT.format(
                     escape_markdown(first_name), escape_markdown(context.bot.first_name),
                 ),
