@@ -72,9 +72,7 @@ ENUM_FUNC_MAP = {
 }
 
 VERIFIED_USER_WAITLIST = {}
-SEXY_IMG = "https://telegra.ph/file/a198848a96e26f4fcd330.jpg"
-KAO_IMG = "https://i.imgur.com/O0bzUO1.jpeg"
-KAOR_IMG = "https://i.imgur.com/ZFjxl98.jpeg"
+SEXY_IMG = "https://telegra.ph/file/ee2217fc9f597794777cb.jpg"
 LUCI_IMG = "https://telegra.ph/file/95081dd971e5820335113.jpg"
 SATAN_IMG = "https://telegra.ph/file/b12cfa028c2bcc4c381d9.jpg"
 LEV_IMG = "https://telegra.ph/file/b9f81deb880f970fa10e7.jpg"
