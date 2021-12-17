@@ -1,3 +1,25 @@
+"""MIT License
+Copyright (C) 2017-2019, Paul Larsen
+Copyright (C) 2021 Awesome-RJ
+Copyright (c) 2021, Yūki • Black Knights Union, <https://github.com/Awesome-RJ/CutiepiiRobot>
+This file is part of @Cutiepii_Robot (Telegram Bot)
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 import html
 import random
 
@@ -77,23 +99,23 @@ def ban(update: Update, context: CallbackContext) -> str:
 
     if is_user_ban_protected(chat, user_id, member) and user not in DEV_USERS:
         if user_id == OWNER_ID:
-            message.reply_text("Trying to put me against a Master huh?")
+            message.reply_text("This is the Head Of School, I can't go against him!")
         elif user_id in DEV_USERS:
-            message.reply_text("I can't act against our own.")
+            message.reply_text("I can't act against our Quintuplets Members.")
         elif user_id in DRAGONS:
             message.reply_text(
-                "Fighting this Bersekser here will put user lives at risk."
+                "This person is School Sensei, I can't fight them.."
             )
         elif user_id in DEMONS:
             message.reply_text(
-                "Bring an order from Master Servant to fight a Assasin servant."
+                "Bring an order from Quintuplets School to fight a High Ranked Student."
             )
         elif user_id in TIGERS:
             message.reply_text(
-                "Bring an order from Master Servant to fight a Lancer servant."
+                "Bring an order from Quintuplets School to fight a Low Ranked Student."
             )
         elif user_id in WOLVES:
-            message.reply_text("Rider abilities make them ban immune!")
+            message.reply_text("School kids abilities make them ban immune!")
         else:
             message.reply_text("This user has immunity and cannot be banned.")
         return log_message
@@ -573,7 +595,7 @@ ROAR_HANDLER = CommandHandler("roar", selfunban)
 UNBAN_BUTTON_HANDLER = CallbackQueryHandler(unbanb_btn, pattern=r"unbanb_")
 KICKME_HANDLER = DisableAbleCommandHandler(["kickme", "punchme"], punchme, filters=Filters.group)
 SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=CustomFilters.sudo_filter)
-BANME_HANDLER = CommandHandler("banme", banme, run_async=True)
+BANME_HANDLER = CommandHandler("banme", banme)
 
 dispatcher.add_handler(BAN_HANDLER)
 dispatcher.add_handler(TEMPBAN_HANDLER)
