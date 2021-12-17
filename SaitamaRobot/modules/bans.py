@@ -595,3 +595,4 @@ __handlers__ = [
     UNBAN_BUTTON_HANDLER,
     SNIPE_HANDLER,
     BANME_HANDLER,
+]
