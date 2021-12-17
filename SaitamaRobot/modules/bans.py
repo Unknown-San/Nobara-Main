@@ -124,23 +124,11 @@ def ban(update: Update, context: CallbackContext) -> str:
         if reason:
             reply += f"\n<code> </code><b>• Reason:</b> \n{html.escape(reason)}"
 
-        bot.sendMessage(
-            chat.id,
-            reply,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="Unban ✅", callback_data=f"unban_unban={user_id}"
-                        ),
-                        InlineKeyboardButton(text="Delete ❌", callback_data="unban_del"),
-                    ]
-                ]
-            ),
-            parse_mode=ParseMode.HTML,
+        bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
+        reply = (
+            f"<code>❕</code><b>Ban Event</b>\n"
+            f"<code> </code><b>•  User:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
         )
-        return log
-    
     
     except BadRequest as excp:
         if excp.message == "Reply message not found":
