@@ -99,25 +99,25 @@ def ban(update: Update, context: CallbackContext) -> str:
 
     if is_user_ban_protected(chat, user_id, member) and user not in DEV_USERS:
         if user_id == OWNER_ID:
-            message.reply_text("This is the Head Of School, I can't go against him!")
+            message.reply_text("This is the GOD, I can't go against him!")
         elif user_id in DEV_USERS:
             message.reply_text("I can't act against our Quintuplets Members.")
         elif user_id in DRAGONS:
             message.reply_text(
-                "This person is School Sensei, I can't fight them.."
+                "This person is wIZARD DRAGON, I can't fight them.."
             )
         elif user_id in DEMONS:
             message.reply_text(
-                "Bring an order from Quintuplets School to fight a High Ranked Student."
+                "DEMON RESIDES HIM, I CANT FIGHT A WIZARD DEMON."
             )
         elif user_id in TIGERS:
             message.reply_text(
-                "Bring an order from Quintuplets School to fight a Low Ranked Student."
+                "Roars of Wizard tiger cant ban him."
             )
         elif user_id in WOLVES:
-            message.reply_text("School kids abilities make them ban immune!")
+            message.reply_text("Shee Immuned!")
         else:
-            message.reply_text("This user has immunity and cannot be banned.")
+            message.reply_text("Immuned.")
         return log_message
     if message.text.startswith("/s"):
         silent = True
