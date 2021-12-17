@@ -124,7 +124,22 @@ def ban(update: Update, context: CallbackContext) -> str:
         )
         if reason:
             reply += f"\n<code> </code><b>•  Reason:</b> \n{html.escape(reason)}"
-        bot.sendMessage(chat.id, reply, parse_mode=ParseMode.HTML, quote=False)
+        
+        bot.sendMessage(
+            chat.id,
+            reply,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Unban ✅", callback_data=f"unbanb_unban={user_id}"
+                        ),
+                        InlineKeyboardButton(text="Delete ❌", callback_data="unbanb_del"),
+                    ]
+                ]
+            ),
+            parse_mode=ParseMode.HTML,
+        )
         return log
     
     except BadRequest as excp:
@@ -424,11 +439,14 @@ PUNCH_HANDLER = CommandHandler("kick", punch)
 UNBAN_HANDLER = CommandHandler("unban", unban)
 ROAR_HANDLER = CommandHandler("roar", selfunban)
 PUNCHME_HANDLER = DisableAbleCommandHandler("kickme", punchme, filters=Filters.group)
+UNBAN_BUTTON_HANDLER = CallbackQueryHandler(unbanb_btn, pattern=r"unbanb_", run_async=True)
+
 
 dispatcher.add_handler(BAN_HANDLER)
 dispatcher.add_handler(TEMPBAN_HANDLER)
 dispatcher.add_handler(PUNCH_HANDLER)
 dispatcher.add_handler(UNBAN_HANDLER)
+dispatcher.add_handler(UNBAN_BUTTON_HANDLER)
 dispatcher.add_handler(ROAR_HANDLER)
 dispatcher.add_handler(PUNCHME_HANDLER)
 
@@ -440,4 +458,6 @@ __handlers__ = [
     UNBAN_HANDLER,
     ROAR_HANDLER,
     PUNCHME_HANDLER,
+    UNBAN_BUTTON_HANDLER,
+
 ]
