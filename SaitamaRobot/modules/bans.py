@@ -39,7 +39,7 @@ from SaitamaRobot.modules.helper_funcs.extraction import extract_user_and_text
 from SaitamaRobot.modules.helper_funcs.string_handling import extract_time
 from SaitamaRobot.modules.log_channel import gloggable, loggable
 
-BAN_STICKER = "CAACAgUAAx0CXuaw8gACfDBhu_pfavcXzQIzP3faGwVpiuIjiQACeQMAAgJ4SVZ9Q4UCXlDJTSME"
+BAN_STICKER = " CAACAgUAAx0EXQNlUAABC1MLYbv7JU7pMkMQ-UicfyS8fIS92ewAAr4CAAKC6YFVKbKxUCYGaYAjBA"
 
 @run_async
 @connection_status
