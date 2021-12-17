@@ -400,7 +400,6 @@ def selfunban(context: CallbackContext, update: Update) -> str:
 
 __help__ = """
  • `/kickme`*:* kicks the user who issued the command
-
 *Admins only:*
  • `/ban <userhandle>`*:* bans a user. (via handle, or reply)
  • `/sban <userhandle>`*:* Silently ban a user. Deletes command, Replied message and doesn't reply. (via handle, or reply)
