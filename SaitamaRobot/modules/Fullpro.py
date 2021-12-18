@@ -1,20 +1,20 @@
 import asyncio
-import traceback
+
+from functools import wraps
+from traceback import format_exc as err
 
 from pyrogram import filters
-from pyrogram.types import ChatPermissions
-from SaitamaRobot import OWNER_ID
-import os 
+from pyrogram.types import CallbackQuery, ChatPermissions, Message
 
-
-from SaitamaRobot import BOT_ID, DRAGONS
-from SaitamaRobot import pbot as app
-from SaitamaRobot import pbot
-
+from SaitamaRobot import BOT_ID, pbot as app
+from SaitamaRobot import DRAGONS as SUDOERS
 
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
-    member = await app.get_chat_member(chat_id, user_id)
+    try:
+        member = await app.get_chat_member(chat_id, user_id)
+    except Exception:
+        return []
     if member.can_post_messages:
         perms.append("can_post_messages")
     if member.can_edit_messages:
@@ -35,119 +35,128 @@ async def member_permissions(chat_id: int, user_id: int):
         perms.append("can_manage_voice_chats")
     return perms
 
-
-async def current_chat_permissions(chat_id):
-    perms = []
-    perm = (await app.get_chat(chat_id)).permissions
-    if perm.can_send_messages:
-        perms.append("can_send_messages")
-    if perm.can_send_media_messages:
-        perms.append("can_send_media_messages")
-    if perm.can_send_stickers:
-        perms.append("can_send_stickers")
-    if perm.can_send_animations:
-        perms.append("can_send_animations")
-    if perm.can_send_games:
-        perms.append("can_send_games")
-    if perm.can_use_inline_bots:
-        perms.append("can_use_inline_bots")
-    if perm.can_add_web_page_previews:
-        perms.append("can_add_web_page_previews")
-    if perm.can_send_polls:
-        perms.append("can_send_polls")
-    if perm.can_change_info:
-        perms.append("can_change_info")
-    if perm.can_invite_users:
-        perms.append("can_invite_users")
-    if perm.can_pin_messages:
-        perms.append("can_pin_messages")
-
-    return perms
-
-
-# Purge Messages
-
-
-
-@pbot.on_message(filters.command("spurge"))
-async def purge(client, message):
-    try:
-        message_ids = []
-        chat_id = message.chat.id
-        user_id = message.from_user.id
-        if message.chat.type not in ("supergroup", "channel"):
-            return
-        permissions = await member_permissions(chat_id, user_id)
-        if "can_delete_messages" in permissions or user_id in DRAGONS:
-            if message.reply_to_message:
-                for a_s_message_id in range(
-                    message.reply_to_message.message_id, message.message_id
-                ):
-                    message_ids.append(a_s_message_id)
-                    if len(message_ids) == 100:
-                        await client.delete_messages(
-                            chat_id=chat_id,
-                            message_ids=message_ids,
-                            revoke=True,
-                        )
-                        message_ids = []
-                if len(message_ids) > 0:
-                    await client.delete_messages(
-                        chat_id=chat_id, message_ids=message_ids, revoke=True
+def adminsOnly(permission):
+    def subFunc(func):
+        @wraps(func)
+        async def subFunc2(client, message: Message, *args, **kwargs):
+            chatID = message.chat.id
+            if not message.from_user:
+                # For anonymous admins
+                if message.sender_chat:
+                    return await authorised(
+                        func,
+                        subFunc2,
+                        client,
+                        message,
+                        *args,
+                        **kwargs,
                     )
-            else:
-                await message.reply_text(
-                    "Reply To A Message To Delete It,"
-                    " Don't Make Fun Of Yourself!"
+                return await unauthorised(
+                    message, permission, subFunc2
                 )
-        else:
-            await message.reply_text("Your Don't Have Enough Permissions!")
-        await message.delete()
-    except Exception as e:
-        await message.reply_text(str(e))
-        e = traceback.format_exc()
-        print(e)
-
-
-@pbot.on_message(filters.command("fullpromote"))
-async def promote(_, message):
-    try:
-        from_user_id = message.from_user.id
-        chat_id = message.chat.id
-        permissions = await member_permissions(chat_id, from_user_id)
-        if (
-            "can_promote_members" not in permissions
-            and from_user_id not in DRAGONS
-        ):
-            await message.reply_text("You don't have enough permissions")
-            return
-        bot = await app.get_chat_member(chat_id, BOT_ID)
-        if len(message.command) == 2:
-            username = message.text.split(None, 1)[1]
-            user_id = (await app.get_users(username)).id
-        elif len(message.command) == 1 and message.reply_to_message:
-            user_id = message.reply_to_message.from_user.id
-        else:
-            await message.reply_text(
-                "Reply To A User's Message Or Give A Username To Promote."
+            # For admins and sudo users
+            userID = message.from_user.id
+            permissions = await member_permissions(chatID, userID)
+            if (
+                userID not in SUDOERS
+                and permission not in permissions
+            ):
+                return await unauthorised(
+                    message, permission, subFunc2
+                )
+            return await authorised(
+                func, subFunc2, client, message, *args, **kwargs
             )
-            return
-        await message.chat.promote_member(
-            user_id=user_id,
-            can_change_info=bot.can_change_info,
-            can_invite_users=bot.can_invite_users,
-            can_delete_messages=bot.can_delete_messages,
-            can_restrict_members=True,
-            can_pin_messages=bot.can_pin_messages,
-            can_promote_members=bot.can_promote_members,
-            can_manage_chat=bot.can_manage_chat,
-            can_manage_voice_chats=bot.can_manage_voice_chats,
+
+        return subFunc2
+
+    return subFunc
+
+async def extract_user_and_reason(message):
+    args = message.text.strip().split()
+    text = message.text
+    user = None
+    reason = None
+    if message.reply_to_message:
+        reply = message.reply_to_message
+        # if reply to a message and no reason is given
+        if not reply.from_user:
+            return None, None
+        if len(args) < 2:
+            reason = None
+        else:
+            reason = text.split(None, 1)[1]
+        return reply.from_user.id, reason
+
+    # if not reply to a message and no reason is given
+    if len(args) == 2:
+        user = text.split(None, 1)[1]
+        return await extract_userid(message, user), None
+
+    # if reason is given
+    if len(args) > 2:
+        user, reason = text.split(None, 2)[1:]
+        return await extract_userid(message, user), reason
+
+    return user, reason
+
+
+async def extract_user(message):
+    return (await extract_user_and_reason(message))[0]
+
+@app.on_message(
+    filters.command("fullpromote") & ~filters.edited & ~filters.private
+)
+@adminsOnly("can_promote_members")
+async def promoteFunc(_, message: Message):
+    user_id = await extract_user(message)
+    if not user_id:
+        return await message.reply_text("I can't find that user.")
+    bot = await app.get_chat_member(message.chat.id, BOT_ID)
+    if user_id == BOT_ID:
+        return await message.reply_text("I can't promote myself.")
+    if not bot.can_promote_members:
+        return await message.reply_text(
+            "I don't have enough permissions"
         )
-        await message.reply_text("Sucessfully Full Promoted this user!")
-
-    except Exception as e:
-        await message.reply_text(str(e))
-        e = traceback.format_exc()
-        print(e)
-
-
+    await message.chat.promote_member(
+        user_id=user_id,
+        can_change_info=bot.can_change_info,
+        can_invite_users=bot.can_invite_users,
+        can_delete_messages=bot.can_delete_messages,
+        can_restrict_members=True,
+        can_pin_messages=bot.can_pin_messages,
+        can_promote_members=bot.can_promote_members,
+        can_manage_chat=bot.can_manage_chat,
+        can_manage_voice_chats=bot.can_manage_voice_chats,
+    )
+    await message.reply_text("Promoted!")
+    
+    
+@app.on_message(
+    filters.command("promote") & ~filters.edited & ~filters.private
+)
+@adminsOnly("can_promote_members")
+async def promoteFunc(_, message: Message):
+    user_id = await extract_user(message)
+    if not user_id:
+        return await message.reply_text("I can't find that user.")
+    bot = await app.get_chat_member(message.chat.id, BOT_ID)
+    if user_id == BOT_ID:
+        return await message.reply_text("I can't promote myself.")
+    if not bot.can_promote_members:
+        return await message.reply_text(
+            "I don't have enough permissions"
+        )
+    await message.chat.promote_member(
+        user_id=user_id,
+        can_change_info=bot.can_change_info,
+        can_invite_users=bot.can_invite_users,
+        can_delete_messages=bot.can_delete_messages,
+        can_restrict_members=False,
+        can_pin_messages=bot.can_pin_messages,
+        can_promote_members=bot.can_promote_members,
+        can_manage_chat=bot.can_manage_chat,
+        can_manage_voice_chats=bot.can_manage_voice_chats,
+    )
+    await message.reply_text("Promoted with rights!")
