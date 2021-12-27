@@ -100,7 +100,7 @@ HELP_STRINGS = """
 
 EREN_IMG = "https://telegra.ph/file/8ab770904946c033f114e.jpg"
 
-DONATE_STRING = """Durov Is my Cousin By The Way.."""
+
 
 IMPORTED = {}
 MIGRATEABLE = []
