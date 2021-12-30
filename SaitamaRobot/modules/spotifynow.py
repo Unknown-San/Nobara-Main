@@ -4,12 +4,12 @@ from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from SaitamaRobot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from SaitamaRobot import TEMP_DOWNLOAD_DIRECTORY
 from SaitamaRobot.events import register
 
 from SaitamaRobot import pbot
 
-@register(outgoing=True, pattern=r"^\.spotnow$")
+@register(outgoing=True, pattern=r"^/spotifynow (.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -49,10 +49,3 @@ async def _(event):
     return os.remove(downloaded_file_name)
 
 
-CMD_HELP.update(
-    {
-        "spotifynow": ">`.spotnow`"
-        "\nUsage: Show what you're listening on spotify."
-        "\n@SpotifyNowBot"
-    }
-)
