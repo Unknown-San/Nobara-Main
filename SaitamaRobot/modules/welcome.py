@@ -61,6 +61,7 @@ VALID_WELCOME_FORMATTERS = [
 ]
 SEXY_IMG = "https://telegra.ph/file/ee2217fc9f597794777cb.jpg"
 LUCI_IMG = "https://telegra.ph/file/14c887a194cae8f30ff8b.jpg"
+SATAN_IMG = "https://telegra.ph/file/b12cfa028c2bcc4c381d9.jpg"
 
 ENUM_FUNC_MAP = {
     sql.Types.TEXT.value: dispatcher.bot.send_message,
@@ -226,9 +227,9 @@ def new_member(update: Update, context: CallbackContext):
 
             # Welcome Sudos
             elif new_mem.id in DRAGONS:
-                update.effective_message.reply_text(
-                    "Whoa! a Yonkos just joined the group! Stay alert!",
-                    reply_to_message_id=reply,
+                update.effective_message.reply_photo(
+                    SATAN_IMG, caption=f"Wizard Dragon is here. \n The Almighty Wizard member", reply_to_message_id=reply,
+                    parse_mode=ParseMode.HTML,
                 )
                 welcome_log = (
                     f"{html.escape(chat.title)}\n"
@@ -240,7 +241,7 @@ def new_member(update: Update, context: CallbackContext):
             # Welcome Support
             elif new_mem.id in DEMONS:
                 update.effective_message.reply_text(
-                    "A Warlord just joined the group! stay alert!",
+                    "A Demon just joined the group! stay alert!",
                     reply_to_message_id=reply,
                 )
                 welcome_log = (
@@ -253,7 +254,7 @@ def new_member(update: Update, context: CallbackContext):
             # Welcome Whitelisted
             elif new_mem.id in TIGERS:
                 update.effective_message.reply_text(
-                    " A New generation Just joined the group!", reply_to_message_id=reply,
+                    " A Tiger Just joined the group!", reply_to_message_id=reply,
                 )
                 welcome_log = (
                     f"{html.escape(chat.title)}\n"
