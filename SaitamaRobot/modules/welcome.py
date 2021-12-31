@@ -60,7 +60,7 @@ VALID_WELCOME_FORMATTERS = [
     "mention",
 ]
 SEXY_IMG = "https://telegra.ph/file/ee2217fc9f597794777cb.jpg"
-LUCI_IMG = "https://telegra.ph/file/14c887a194cae8f30ff8b.jpg"
+LUCI_IMG = "https://telegra.ph/file/1f6195d971ae9bd545cbb.jpg"
 SATAN_IMG = "https://telegra.ph/file/b12cfa028c2bcc4c381d9.jpg"
 
 ENUM_FUNC_MAP = {
