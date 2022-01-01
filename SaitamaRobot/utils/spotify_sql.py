@@ -1,85 +1,53 @@
-from pyfy import Spotify as Pyfy, ClientCreds, UserCreds
-from pyfy.excs import ApiError
-from dataclasses import dataclass
+import threading
 
-from acutebot import TOKEN, SPT_CLIENT_SECRET, SPT_CLIENT_ID, APP_URL
-from acutebot.helpers.database.spotify_sql import get_sptuser
-
-import typing
+from sqlalchemy import Column, Integer, UnicodeText
+from SaitamaRobot.utils.database import SESSION, BASE
 
 
-@dataclass
-class Music:
-    id: str
-    name: str
-    artist: str
-    url: str
-    thumbnail: str
+class SpotifyCreds(BASE):
+    __tablename__ = "spotifycreds"
+    user_id = Column(Integer, primary_key=True)
+    spotify_id = Column(UnicodeText)
+    spotify_access_token = Column(UnicodeText)
+    spotify_refresh_token = Column(UnicodeText)
 
-    def __init__(self, music: dict):
-        self.id = music["id"]
-        self.name = music["name"]
-        self.artist = music["artists"][0]["name"]
-        self.url = music["external_urls"]["spotify"]
-        self.thumbnail = music["album"]["images"][1]["url"]
-
-
-class Spotify:
-    def __init__(self, user: dict):
-
-        try:
-            self._client = SpotifyClient(
-                access_token=user["spotify_access_token"],
-                refresh_token=user["spotify_refresh_token"],
-            )
-        except ApiError:
-            raise Exception("tokens invalid")
-
-    @property
-    def current_music(self) -> typing.Optional[Music]:
-        try:
-            current_status = self._client.currently_playing()
-            music = current_status["item"]
-            return Music(music)
-        except Exception:
-            return
-
-    @property
-    def last_music(self) -> Music:
-        music = self._client.recently_played_tracks(limit=1)["items"][0]["track"]
-        return Music(music)
-
-
-class SpotifyClient(Pyfy):
     def __init__(
-        self, access_token=None, refresh_token=None,
+        self,
+        user_id,
+        spotify_id=None,
+        spotify_access_token=None,
+        spotify_refresh_token=None,
     ):
-        scopes = [
-            "user-read-recently-played",
-            "user-read-playback-state",
-        ]
+        self.user_id = user_id
+        self.spotify_id = spotify_id
+        self.spotify_access_token = spotify_access_token
+        self.spotify_refresh_token = spotify_refresh_token
 
-        user_creds = None
 
-        if access_token and refresh_token:
-            user_creds = UserCreds(
-                access_token=access_token, refresh_token=refresh_token
+SpotifyCreds.__table__.create(checkfirst=True)
+SPT_INSERTION_LOCK = threading.RLock()
+
+
+def update_creds(
+    user_id, spotify_id=None, spotify_access_token=None, spotify_refresh_token=None
+):
+    with SPT_INSERTION_LOCK:
+        sptcreds = SESSION.query(SpotifyCreds).get(user_id)
+        if not sptcreds:
+            sptcreds = SpotifyCreds(
+                user_id, spotify_id, spotify_access_token, spotify_refresh_token
             )
-
-        super().__init__(
-            client_creds=ClientCreds(
-                client_id=SPT_CLIENT_ID,
-                client_secret=SPT_CLIENT_SECRET,
-                redirect_uri=APP_URL + "Spotifynow/webserver",
-                scopes=scopes,
-            ),
-            user_creds=user_creds,
-        )
+            SESSION.add(sptcreds)
+            SESSION.flush()
+        else:
+            sptcreds.spotify_id = spotify_id
+            sptcreds.spotify_access_token = spotify_access_token
+            sptcreds.spotify_refresh_token = spotify_refresh_token
+        SESSION.commit()
 
 
-def get_spotify_data(user_id):
+def get_sptuser(user_id):
     try:
-        user = get_sptuser(user_id)
-        return Spotify(user)
-    except Exception:
-        return False
+        return (SESSION.query(SpotifyCreds).get(user_id)).__dict__
+    finally:
+        SESSION.close()
