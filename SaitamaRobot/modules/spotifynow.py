@@ -3,7 +3,7 @@ from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 from SaitamaRobot import dp, typing
-from SaitamaRobot.helpers.spthelper import SpotifyClient, get_spotify_data
+from SaitamaRobot.utils.spthelper import SpotifyClient, get_spotify_data
 import SaitamaRobot.helpers.strings as st
 
 
