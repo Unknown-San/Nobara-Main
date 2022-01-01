@@ -3,7 +3,7 @@ from pyfy.excs import ApiError
 from dataclasses import dataclass
 
 from SaitamaRobot import TOKEN, SPT_CLIENT_SECRET, SPT_CLIENT_ID, APP_URL
-from SaitamaRobot.helpers.database.spotify_sql import get_sptuser
+from SaitamaRobot.utils.spotify_sql import get_sptuser
 
 import typing
 
