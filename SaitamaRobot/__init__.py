@@ -41,6 +41,7 @@ if ENV:
     JOIN_LOGGER = os.environ.get("JOIN_LOGGER", None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
+
     try:
         DRAGONS = set(int(x) for x in os.environ.get("DRAGONS", "").split())
         DEV_USERS = set(int(x) for x in os.environ.get("DEV_USERS", "").split())
@@ -63,7 +64,8 @@ if ENV:
         raise Exception("Your tiger users list does not contain valid integers.")
 
 
-    
+    __version__ = "1.1.2-rev04"
+
     
     
     SPT_CLIENT_SECRET = os.environ.get("SPT_CLIENT_SECRET")
