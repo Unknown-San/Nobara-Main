@@ -11,6 +11,7 @@ from Python_ARQ import ARQ
 from aiohttp import ClientSession
 from telegram.ext import Updater, Defaults
 from telegram import ChatAction, ParseMode
+from functools import wraps
 
 StartTime = time.time()
 
