@@ -9,6 +9,7 @@ from telethon import TelegramClient
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 from Python_ARQ import ARQ
 from aiohttp import ClientSession
+from telegram.ext import Updater, Defaults
 
 StartTime = time.time()
 
