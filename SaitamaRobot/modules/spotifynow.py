@@ -4,7 +4,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 from SaitamaRobot import dp, typing
 from SaitamaRobot.utils.spthelper import SpotifyClient, get_spotify_data
-import SaitamaRobot.helpers.strings as st
+import SaitamaRobot.utils.strings as st
 
 
 def authorize(update, user_id):
