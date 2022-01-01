@@ -171,6 +171,7 @@ DEV_USERS.add(OWNER_ID)
 
 print("[INFO]: INITIALIZING ARQ CLIENT")
 arq = ARQ("https://thearq.tech", "UIUXOY-NTKWDC-QHFFMD-DHHKVV-ARQ", aiohttpsession)
+aiohttpsession = ClientSession()
 
 
 if not SPAMWATCH_API:
