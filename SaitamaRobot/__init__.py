@@ -10,6 +10,7 @@ from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 from Python_ARQ import ARQ
 from aiohttp import ClientSession
 from telegram.ext import Updater, Defaults
+from telegram import ChatAction, ParseMode
 
 StartTime = time.time()
 
