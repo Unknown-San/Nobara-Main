@@ -66,7 +66,8 @@ if ENV:
     
     
     
-    
+    SPT_CLIENT_SECRET = os.environ.get("SPT_CLIENT_SECRET")
+    SPT_CLIENT_ID = os.environ.get("SPT_CLIENT_ID")
     INFOPIC = bool(os.environ.get("INFOPIC", False))
     EVENT_LOGS = os.environ.get("EVENT_LOGS", None)
     WEBHOOK = bool(os.environ.get("WEBHOOK", False))
