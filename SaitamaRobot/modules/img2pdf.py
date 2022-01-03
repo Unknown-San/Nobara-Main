@@ -9,7 +9,7 @@ from pyrogram.types import Message
 
 from SaitamaRobot import pbot as app
 from SaitamaRobot.utils.errors import capture_err
-from SaitamaRobot.utils.sections import section
+from SaitamaRobot.utils.services import section
 
 
 async def convert(
