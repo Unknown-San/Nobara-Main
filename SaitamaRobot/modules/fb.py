@@ -6,7 +6,7 @@ from datetime import datetime
 from telethon import events
 
 from SaitamaRobot.utils.pluginhelp import is_admin
-from SaitamaRobot import telethn, BOT_USERNAME, SUPPORT_CHAT
+from SaitamaRobot import telethn, SUPPORT_CHAT
 
 
 def main(url, filename):
