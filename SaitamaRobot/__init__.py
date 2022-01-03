@@ -7,7 +7,6 @@ from pyrogram import Client, errors
 import telegram.ext as tg
 from telethon import TelegramClient
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
-from telegraph import Telegraph
 
 StartTime = time.time()
 
@@ -94,7 +93,6 @@ if ENV:
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     BOT_ID = os.environ.get ("BOT_ID", None)
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
-    TMDBAPI = os.environ.get("TMDBAPI")
 
     try:
         BL_CHATS = set(int(x) for x in os.environ.get("BL_CHATS", "").split())
@@ -166,21 +164,12 @@ else:
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
         
-session_name = TOKEN.split(":")[0]
+
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
 
 
-pgram = Client(
-    session_name,
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=TOKEN,
-)
-
-
-telegraph = Telegraph()
 
 if not SPAMWATCH_API:
     sw = None
@@ -216,5 +205,3 @@ from SaitamaRobot.modules.helper_funcs.handlers import (
 tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
-
-
