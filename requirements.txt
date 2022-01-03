@@ -62,3 +62,4 @@ html2text
 bing_image_downloader
 googletrans
 tracemoepy
+img2pdf
