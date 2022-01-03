@@ -212,3 +212,8 @@ from SaitamaRobot.modules.helper_funcs.handlers import (
 tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
+
+# Use HTML treewide;
+defaults = Defaults(parse_mode=ParseMode.HTML)
+updater = Updater(TOKEN, use_context=True, workers=WORKERS, defaults=defaults)
+dp = updater.dispatcher
