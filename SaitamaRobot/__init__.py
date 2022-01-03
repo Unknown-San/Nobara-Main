@@ -94,6 +94,7 @@ if ENV:
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     BOT_ID = os.environ.get ("BOT_ID", None)
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
+    TMDBAPI = os.environ.get("TMDBAPI")
 
     try:
         BL_CHATS = set(int(x) for x in os.environ.get("BL_CHATS", "").split())
@@ -169,12 +170,24 @@ session_name = TOKEN.split(":")[0]
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
+def typing(func):
+    """Sends typing action while processing func command."""
+
+    @wraps(func)
+    def command_func(update, context, *args, **kwargs):
+        context.bot.send_chat_action(
+            chat_id=update.effective_chat.id, action=ChatAction.TYPING
+        )
+        return func(update, context, *args, **kwargs)
+
+    return command_func
 pgram = Client(
     session_name,
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=TOKEN,
 )
+
 
 telegraph = Telegraph()
 
