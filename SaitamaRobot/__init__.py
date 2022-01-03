@@ -170,17 +170,8 @@ session_name = TOKEN.split(":")[0]
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
-def typing(func):
-    """Sends typing action while processing func command."""
 
-    @wraps(func)
-    def command_func(update, context, *args, **kwargs):
-        context.bot.send_chat_action(
-            chat_id=update.effective_chat.id, action=ChatAction.TYPING
-        )
-        return func(update, context, *args, **kwargs)
 
-    return command_func
 pgram = Client(
     session_name,
     api_id=API_ID,
@@ -226,7 +217,4 @@ tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
 
-# Use HTML treewide;
-defaults = Defaults(parse_mode=ParseMode.HTML)
-updater = Updater(TOKEN, use_context=True, workers=WORKERS, defaults=defaults)
-dp = updater.dispatcher
+
