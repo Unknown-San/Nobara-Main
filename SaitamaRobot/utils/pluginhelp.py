@@ -84,6 +84,8 @@ async def delete_or_pass(message):
     return await message.delete()
 
 
+
+
 def humanbytes(size):
     if not size:
         return ""
