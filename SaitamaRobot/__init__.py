@@ -164,7 +164,7 @@ else:
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
         
-
+session_name = TOKEN.split(":")[0]
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
