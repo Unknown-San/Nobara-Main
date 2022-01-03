@@ -63,6 +63,14 @@ def get_readable_time(seconds: int) -> int:
     return ping_time
 
 
+async def is_admin(event, user):
+    try:
+        sed = await event.client.get_permissions(event.chat_id, user)
+        is_mod = bool(sed.is_admin)
+    except:
+        is_mod = False
+    return is_mod
+
 def time_formatter(milliseconds: int) -> str:
     seconds, milliseconds = divmod(int(milliseconds), 1000)
     minutes, seconds = divmod(seconds, 60)
