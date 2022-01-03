@@ -289,6 +289,18 @@ async def get_administrators(chat: Chat) -> List[User]:
         )
         return await get_administrators(chat)
 
+ 
+def admins_only(func: Callable) -> Coroutine:
+    async def wrapper(client: Client, message: Message):
+        if message.from_user.id == OWNER_ID:
+            return await func(client, message)
+        admins = await get_administrators(message.chat)
+        for admin in admins:
+            if admin.id == message.from_user.id:
+                return await func(client, message)
+
+    return wrapper
+
 
 def admins_only(func: Callable) -> Coroutine:
     async def wrapper(client: Client, message: Message):
