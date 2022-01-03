@@ -168,8 +168,14 @@ else:
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
+pgram = Client(
+    session_name,
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=TOKEN,
+)
 
-
+telegraph = Telegraph()
 
 if not SPAMWATCH_API:
     sw = None
