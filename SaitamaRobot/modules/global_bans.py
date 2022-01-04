@@ -71,6 +71,7 @@ UNGBAN_ERRORS = {
     "User not found",
 }
 
+GBANVID = "https://telegra.ph/file/827599e5d7a358023ce66.mp4"
 
 @run_async
 @support_plus
@@ -164,7 +165,10 @@ def gban(update: Update, context: CallbackContext):
 
         return
 
-    message.reply_text("On it!")
+                    update.effective_message.reply_photo(
+                    GBANVID, caption=f"Verifying By System ////", reply_to_message_id=reply,
+                    parse_mode=ParseMode.HTML,
+                )
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
