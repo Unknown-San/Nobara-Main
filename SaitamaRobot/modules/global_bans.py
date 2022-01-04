@@ -88,7 +88,14 @@ def gban(update: Update, context: CallbackContext):
             "You don't seem to be referring to a user or the ID specified is incorrect..",
         )
         return
-
+   
+    if int(user_id) in OWNER_ID:
+        message.reply_photo(
+                    GODVID, caption = f"You Tried Banning <b>THE GOD</b>{html.escape(user.first_name)} The Consequences Would be Brutal.", reply_to_message_id=reply,
+                    parse_mode=ParseMode.HTML,
+                )
+        return
+    
     if int(user_id) in DEV_USERS:
         message.reply_text(
             "That user is member of the WIZARD I can't act against our own.",
