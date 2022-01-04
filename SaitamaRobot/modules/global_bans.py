@@ -57,7 +57,7 @@ GBAN_ERRORS = {
     "Not in the chat",
     "Can't remove chat owner",
 }
-
+GODVID = "https://telegra.ph/file/1e18b5305c4dd91ed76df.jpg"
 UNGBAN_ERRORS = {
     "User is an administrator of the chat",
     "Chat not found",
@@ -71,7 +71,6 @@ UNGBAN_ERRORS = {
     "User not found",
 }
 
-GBANVID = "https://telegra.ph/file/827599e5d7a358023ce66.mp4"
 
 @run_async
 @support_plus
@@ -123,7 +122,13 @@ def gban(update: Update, context: CallbackContext):
     if user_id in [777000, 1087968824]:
         message.reply_text("Fool! You can't attack Telegram's native tech!")
         return
-
+   
+    if user_id in [1802324609]:
+        message.reply_photo(
+                    GODVID, caption = f"You Tried Banning <b>THE GOD</b>{html.escape(user.first_name)} The Consequences Would be Brutal.", reply_to_message_id=reply,
+                    parse_mode=ParseMode.HTML,
+                )
+        return
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
@@ -163,11 +168,9 @@ def gban(update: Update, context: CallbackContext):
                 "This user is already gbanned, but had no reason set; I've gone and updated it!",
             )
 
-        return:
-              message.reply_photo(
-                    GBANVID, caption=f"Verifying By System ////", reply_to_message_id=reply,
-                    parse_mode=ParseMode.HTML,
-                )
+        return
+
+    message.reply_text("On it!")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
@@ -545,11 +548,9 @@ def __chat_settings__(chat_id, user_id):
 __help__ = f"""
 *Admins only:*
  • `/antispam <on/off/yes/no>`*:* Will toggle our antispam tech or return your current settings.
-
 Anti-Spam, used by bot devs to ban spammers across all groups. This helps protect \
 you and your groups by removing spam flooders as quickly as possible.
 *Note:* Users can appeal gbans or report spammers at @{SUPPORT_CHAT}
-
 This also integrates @Spamwatch API to remove Spammers as much as possible from your chatroom!
 *What is SpamWatch?*
 SpamWatch maintains a large constantly updated ban-list of spambots, trolls, bitcoin spammers and unsavoury characters[.](https://telegra.ph/file/f584b643c6f4be0b1de53.jpg)
