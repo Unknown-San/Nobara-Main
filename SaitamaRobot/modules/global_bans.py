@@ -163,9 +163,8 @@ def gban(update: Update, context: CallbackContext):
                 "This user is already gbanned, but had no reason set; I've gone and updated it!",
             )
 
-        return
-
-                    update.effective_message.reply_photo(
+        return:
+              message.reply_photo(
                     GBANVID, caption=f"Verifying By System ////", reply_to_message_id=reply,
                     parse_mode=ParseMode.HTML,
                 )
