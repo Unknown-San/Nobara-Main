@@ -90,10 +90,10 @@ def gban(update: Update, context: CallbackContext):
         return
    
     if int(user_id) in OWNER_ID:
-        message.reply_photo(
+        update.effective_message.reply_photo(
                     GODVID, caption = f"You Tried Banning <b>THE GOD</b>{html.escape(user.first_name)} The Consequences Would be Brutal.", reply_to_message_id=reply,
                     parse_mode=ParseMode.HTML,
-                )
+        )
         return
     
     if int(user_id) in DEV_USERS:
