@@ -13,6 +13,8 @@ from telegram.ext import Updater, Defaults
 from telegram import ChatAction, ParseMode
 from functools import wraps
 
+arq = ARQ("https://thearq.tech", "YIECCC-NAJARO-OLLREW-SJSRIP-ARQ", aiohttpsession)
+
 StartTime = time.time()
 
 # enable logging
