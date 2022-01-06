@@ -177,7 +177,8 @@ def gban(update: Update, context: CallbackContext):
 
         return
     NOBARA="https://telegra.ph/file/827599e5d7a358023ce66.mp4"
-    message.reply_video(NOBARA , caption="Ryōiki Tenkai , Welcome to Nobara Domain", reply_to_message_id=reply,
+    NOARAARF="Ryōiki Tenkai , Welcome to Nobara Domain"
+    message.reply_video(NOBARA , caption=NOARAARF , reply_to_message_id=reply,
     parse_mode=ParseMode.HTML,
        )
 
