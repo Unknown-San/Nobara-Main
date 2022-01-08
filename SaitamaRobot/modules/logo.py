@@ -11,7 +11,7 @@ from io import BytesIO
 from requests import get
 from telethon.tl.types import InputMessagesFilterPhotos
 
-from SaitamaRobot import OWNER_ID, BOT_USERNAME, SUPPORT_CHAT
+from SaitamaRobot import OWNER_ID, SUPPORT_CHAT
 from SaitamaRobot.events import register
 from SaitamaRobot import telethn
 from PIL import Image, ImageDraw, ImageFont
@@ -268,7 +268,7 @@ async def lego(event):
     pointsize = 500
     fillcolor = "black"
     shadowcolor = "blue"
-    fnt = glob.glob("./SaitamaRobot/logo/*")
+    fnt = glob.glob("./SaitamaRobot/Logo/*")
     randf = random.choice(fnt)
     font = ImageFont.truetype(randf, 120)
     w, h = draw.textsize(text, font=font)
