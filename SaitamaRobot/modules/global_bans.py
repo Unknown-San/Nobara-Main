@@ -163,8 +163,11 @@ def gban(update: Update, context: CallbackContext):
             )
 
         return
-
-    message.reply_text("On it!")
+    NOBARAPIC="https://te.legra.ph/file/b30fd3da61a11ebb2aac6.mp4"
+    NOBARAGBAN  = """Ryōiki Tenkai! Welcome to Nobara domain"""
+    message.reply_video(NOBARAPIC  , caption = NOBARAGBAN,
+                        parse_mode=ParseMode.MARKDOWN
+                        )
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
