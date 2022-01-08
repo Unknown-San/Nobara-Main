@@ -57,7 +57,7 @@ GBAN_ERRORS = {
     "Not in the chat",
     "Can't remove chat owner",
 }
-GODVID = "https://telegra.ph/file/1e18b5305c4dd91ed76df.jpg"
+
 UNGBAN_ERRORS = {
     "User is an administrator of the chat",
     "Chat not found",
@@ -88,14 +88,7 @@ def gban(update: Update, context: CallbackContext):
             "You don't seem to be referring to a user or the ID specified is incorrect..",
         )
         return
-   
-    if int(user_id) in OWNER_ID:
-        update.effective_message.reply_photo(
-                    GODVID, caption = f"You Tried Banning <b>THE GOD</b>{html.escape(user.first_name)} The Consequences Would be Brutal.", reply_to_message_id=reply,
-                    parse_mode=ParseMode.HTML,
-        )
-        return
-    
+
     if int(user_id) in DEV_USERS:
         message.reply_text(
             "That user is member of the WIZARD I can't act against our own.",
@@ -129,13 +122,7 @@ def gban(update: Update, context: CallbackContext):
     if user_id in [777000, 1087968824]:
         message.reply_text("Fool! You can't attack Telegram's native tech!")
         return
-   
-    if int(user_id) in OWNER_ID:
-        message.reply_photo(
-                    GODVID, caption = f"You Tried Banning <b>THE GOD</b>{html.escape(user.first_name)} The Consequences Would be Brutal.", reply_to_message_id=reply,
-                    parse_mode=ParseMode.HTML,
-                )
-        return
+
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
@@ -176,20 +163,8 @@ def gban(update: Update, context: CallbackContext):
             )
 
         return
-    NOBARA="https://telegra.ph/file/827599e5d7a358023ce66.mp4"
-    NOARAARF="Ryōiki Tenkai , Welcome to Nobara Domain"
-    message.reply_video(NOBARA , caption=NOARAARF ,
-    reply_markup=InlineKeyboardMarkup(
-                [
-             [
-                InlineKeyboardButton(text="Request to reborn", url="https://t.me/NobaraSupport"),
-             ],
-          ]
-            
-        ),          
-   
-  parse_mode=ParseMode.MARKDOWN
-       )
+
+    message.reply_text("On it!")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
