@@ -1,15 +1,15 @@
 {
-      "name": "FoundingTitanRobot",
+      "name": "Nobara",
       "description": "An Anime themed Telegram group management bot.",
       "keywords": [
          "telegram",
          "anime",
          "group",
          "manager",
-         "Eren"
+         "Nobara"
       ],   
-  "logo":    "https://telegra.ph/file/ed5b77b9aa323a3abd08e.jpg",
- "repository": "https://github.com/sasukeuchiha912/ErenJaegerRobot",
+  "logo":    "https://telegra.ph/file/aaa51200cb9136bd535f5.jpg",
+ "repository": "https://github.com/Unknown-San/Nobara-Main",
    "addons": [
       {
          "options": {
@@ -29,6 +29,12 @@
          "required": true,
          "value": ""
       },
+      
+       "DATABASE_URL": {
+         "description": "Ok.",
+         "required": true,
+         "value": ""
+      },   
       "API_HASH": {
          "description": "Get API_HASH from my.telegram.org, used for telethon based modules.",
          "required": true,
@@ -42,26 +48,26 @@
       "OWNER_ID": {
          "description": "Your user ID as an integer.",
          "required": true,
-         "value": "1352499461"
+         "value": "1802324609"
       },
       "OWNER_USERNAME": {
          "description": "Your username without the @",
-         "value": "ihaveenoughhate"
+         "value": "xtheanonymous"
       },
       "SUPPORT_CHAT": {
          "description": "Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah.",
          "required": true,
-         "value": "foundingtitansupport"
+         "value": "NobaraSupport"
       },
       "EVENT_LOGS": {
          "description": "Event logs channel to note down important bot level events, recommend to make this public. ex: '-123456'",
          "required": true,
-         "value": "-1001445585494"
+         "value": "-1001535412614"
       },
       "JOIN_LOGGER": {
          "description": "A channel where bot will print who added it to what group, useful during debugging or spam handling.",
          "required": true,
-         "value": "-1001445585494"
+         "value": "-1001566611018"
       },      
       "CASH_API_KEY": {
          "description": "Required for currency converter. Get yours from https://www.alphavantage.co/support/#api-key",
@@ -77,7 +83,7 @@
       "DEV_USERS": {
          "description": "ID of users who are Devs of your bot (can use /py etc.). If you are a noob and would come and bother Eren support then keep the current ID's here at they are and add yours.",
          "required": false,
-         "value": "1755728237"
+         "value": ""
       },
       "sw_api": {
          "description": "Spamwatch API Token, Get one from @SpamWatchBot.",
@@ -149,7 +155,7 @@
       },
       "DEL_CMDS": {
          "description": "Set this to True if you want to delete command messages from users who don't have the perms to run that command.",
-         "value": "True"
+         "value": "false"
       },            
       "BAN_STICKER": {
          "description": "ID of the sticker you want to use when banning people.",
@@ -159,31 +165,31 @@
       "WALL_API": {
          "description": "Required for wallpaper. Get your's from https://wall.alphacoders.com/",
          "required": false,
-         "value": ""
+         "value": "2455acab48f3a935a8e703e54e26d121"
        },
        "MONGO_DB_URI": {
          "description": "Your Mongo Database Url, create it from https://cloud.mongodb.com/",
          "required": true,
-         "value": ""
+         "value": "mongodb+srv://nobara:nobara@cluster0.gjnbl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
        }, 
        "REDIS_URI": {
          "description": "Redis Url create one from redislabs.com.",
-         "required": true,
+         "required": false,
          "value": ""
        }, 
        "APP_ID": {
          "description": "API ID of 2nd telegram account if you dont have two accounts then use the same accounts API ID, but i recommend using 2nd accounts API ID",
-         "required": true,
+         "required": false,
          "value": ""
       }, 
       "APP_HASH": {
          "description": " API HASH of 2nd telegram account if you dont two accounts then use the same accounts API HASH, but i recommend using 2nd accounts API HASH.",
-         "required": true,
+         "required": false,
          "value": ""
        }, 
        "STRING_SESSION": {
          "description": "Telethon String Session, create it from https://repl.it/@SpEcHiDe/GenerateStringSession .",
-         "required": true,
+         "required": false,
          "value": ""
       }
       
